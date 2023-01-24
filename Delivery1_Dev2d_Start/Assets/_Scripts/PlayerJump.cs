@@ -27,12 +27,14 @@ public class PlayerJump : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerInput.OnJump += OnJump;
+        PlayerInput.OnJumpStarted += OnJumpStarted;
+        PlayerInput.OnJumpFinished += OnJumpFinished;
     }
 
     private void OnDisable()
     {
-        PlayerInput.OnJump -= OnJump;
+        PlayerInput.OnJumpStarted -= OnJumpStarted;
+        PlayerInput.OnJumpFinished += OnJumpFinished;
     }
     void Start()
     {
@@ -46,11 +48,6 @@ public class PlayerJump : MonoBehaviour
         //    TweakGravity();
     }
 
-    //private void TweakGravity()
-    //{
-    //    _rigidbody.gravityScale *= 1.2f;
-    //}
-
     private bool PeakReached()
     {
         bool reached = ((_lastVelocity_Y * _rigidbody.velocity.y) < 0);
@@ -58,7 +55,7 @@ public class PlayerJump : MonoBehaviour
         return reached;
     }
 
-    public void OnJump(PlayerInput playerInput)
+    public void OnJump(PlayerInput v)
     {
         SetGravity();
         var vel = new Vector2(_rigidbody.velocity.x, GetJumpForce());
@@ -77,14 +74,14 @@ public class PlayerJump : MonoBehaviour
         _rigidbody.gravityScale = grav / 9.81f;
     }
 
-    public void OnJumpStarted()
+    public void OnJumpStarted(PlayerInput v)
     {
         SetGravity();
         var vel = new Vector2(_rigidbody.velocity.x, GetJumpForce());
         _rigidbody.velocity = vel;
         _jumpStartedTime = Time.time;
     }
-    public void OnJumpFinished()
+    public void OnJumpFinished(PlayerInput v)
     {
         float fractionOfTimePressed = 1 /
             Mathf.Clamp01((Time.time - _jumpStartedTime) /
