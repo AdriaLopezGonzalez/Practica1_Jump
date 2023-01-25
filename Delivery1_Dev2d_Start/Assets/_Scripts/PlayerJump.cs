@@ -24,6 +24,7 @@ public class PlayerJump : MonoBehaviour
 
     public ContactFilter2D filter;
 
+    public static Action<Rigidbody2D> CheckCollision;
 
     private void OnEnable()
     {
@@ -34,7 +35,7 @@ public class PlayerJump : MonoBehaviour
     private void OnDisable()
     {
         PlayerInput.OnJumpStarted -= OnJumpStarted;
-        PlayerInput.OnJumpFinished += OnJumpFinished;
+        PlayerInput.OnJumpFinished -= OnJumpFinished;
     }
     void Start()
     {
@@ -44,8 +45,16 @@ public class PlayerJump : MonoBehaviour
 
     void FixedUpdate()
     {
-        //if (PeakReached())
-        //    TweakGravity();
+        if (PeakReached())
+        {
+            Debug.Log("pik");
+            CheckCollision?.Invoke(_rigidbody);
+        }
+    }
+
+    private void TweakGravity(InvertGravity v)
+    {
+        _rigidbody.gravityScale = -_rigidbody.gravityScale;
     }
 
     private bool PeakReached()
