@@ -10,15 +10,21 @@ public class PlayerInput : MonoBehaviour
     public float MovementVertical { get; private set; }
 
 
-    public static Action<PlayerInput> OnJump;
+    public static Action<PlayerInput> OnJumpStarted;
+    public static Action<PlayerInput> OnJumpFinished;
     // Update is called once per frame
     void Update()
     {
         MovementHorizontal = Input.GetAxis("Horizontal");
         MovementVertical = Input.GetAxis("Vertical");
-        if (Input.GetKey(KeyCode.Space) && CollisionDetected.IsGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && CollisionDetected.IsGrounded)
         {
-           OnJump?.Invoke(this);
+           OnJumpStarted?.Invoke(this);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            OnJumpFinished?.Invoke(this);
         }
     }
 }
