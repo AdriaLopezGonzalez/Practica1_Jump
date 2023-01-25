@@ -7,8 +7,6 @@ public class InvertGravity : MonoBehaviour
 {
     private bool isCollidingPlayer;
 
-    public static Action<InvertGravity> TweakGravity;
-
     private void OnEnable()
     {
         PlayerJump.CheckCollision += CheckCollision;
@@ -29,13 +27,27 @@ public class InvertGravity : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        var player = other.GetComponent<PlayerJump>();
+        if (player)
+        {
+            isCollidingPlayer = false;
+        }
+    }
+
     private void CheckCollision(Rigidbody2D playerBody2D)
     {
-        Debug.Log("entro a la coli");
+        Debug.Log("entro a checkcol");
         if (isCollidingPlayer)
         {
-            Debug.Log("hola");
-            playerBody2D.gravityScale = -playerBody2D.gravityScale;
+            Debug.Log("canvi");
+            TweakGravity(playerBody2D);
         }
+    }
+
+    private void TweakGravity(Rigidbody2D playerBody2D)
+    {
+        playerBody2D.gravityScale = -playerBody2D.gravityScale;
     }
 }
