@@ -64,9 +64,18 @@ public class PlayerJump : MonoBehaviour
 
     private bool PeakReached()
     {
-        bool reached = ((_lastVelocity_Y * _rigidbody.velocity.y) < 0);
-        _lastVelocity_Y = _rigidbody.velocity.y;
-        return reached;
+        if (CollisionDetected.WasTouchingRoof)
+        {
+            bool reached = ((_lastVelocity_Y * -_rigidbody.velocity.y) > 0);
+            _lastVelocity_Y = -_rigidbody.velocity.y;
+            return reached;
+        }
+        else
+        {
+            bool reached = ((_lastVelocity_Y * _rigidbody.velocity.y) > 0);
+            _lastVelocity_Y = _rigidbody.velocity.y;
+            return reached;
+        }
     }
 
     public void OnJump(PlayerInput v)
@@ -85,6 +94,8 @@ public class PlayerJump : MonoBehaviour
     {
         var grav = 2 * JumpHeight * (SpeedHorizontal * SpeedHorizontal)
             / (DistanceToMaxHeight * DistanceToMaxHeight);
+        if (CollisionDetected.IsTouchingRoof)
+            grav = -grav;
         _rigidbody.gravityScale = grav / 9.81f;
     }
 

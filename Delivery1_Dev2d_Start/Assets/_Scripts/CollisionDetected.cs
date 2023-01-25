@@ -18,7 +18,9 @@ public class CollisionDetected : MonoBehaviour
 
     private float checkRadius = 0.15f;
     private bool _wasGrounded;
-    private bool _wasTouchingRoof;
+
+    private static bool _wasTouchingRoof;
+    public static bool WasTouchingRoof { get { return _wasTouchingRoof; } }
 
     [SerializeField]
     private static bool _isGrounded;

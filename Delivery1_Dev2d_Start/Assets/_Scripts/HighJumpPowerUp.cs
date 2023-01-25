@@ -5,9 +5,6 @@ using UnityEngine;
 public class HighJumpPowerUp : MonoBehaviour
 {
 
-    [SerializeField]
-    private GameObject PowerUpObject;
-
     // Start is called before the first frame update
     void Start()
     {

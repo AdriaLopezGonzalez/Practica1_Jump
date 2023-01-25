@@ -7,6 +7,8 @@ public class InvertGravity : MonoBehaviour
 {
     private bool isCollidingPlayer;
 
+    public Collider2D Player;
+
     private void OnEnable()
     {
         PlayerJump.CheckCollision += CheckCollision;
@@ -49,5 +51,8 @@ public class InvertGravity : MonoBehaviour
     private void TweakGravity(Rigidbody2D playerBody2D)
     {
         playerBody2D.gravityScale = -playerBody2D.gravityScale;
+
+        var player = Player.GetComponent<PlayerJump>();
+        player.SpeedHorizontal = -player.SpeedHorizontal;
     }
 }
