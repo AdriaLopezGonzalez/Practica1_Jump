@@ -26,6 +26,8 @@ public class PlayerJump : MonoBehaviour
 
     public static Action<Rigidbody2D> CheckCollision;
 
+    private bool startJump;
+
     private void OnEnable()
     {
         PlayerInput.OnJumpStarted += OnJumpStarted;
@@ -45,10 +47,13 @@ public class PlayerJump : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (PeakReached())
+        if (PeakReached()&&startJump)
         {
             Debug.Log("pik");
+
             CheckCollision?.Invoke(_rigidbody);
+
+            startJump = false;
         }
     }
 
@@ -96,6 +101,7 @@ public class PlayerJump : MonoBehaviour
             Mathf.Clamp01((Time.time - _jumpStartedTime) /
             PressTimeToMaxJump);
         _rigidbody.gravityScale *= fractionOfTimePressed;
+        startJump = true;
     }
 
     private float DistanceToGround()
