@@ -9,7 +9,7 @@ public class CollisionDetected : MonoBehaviour
     [SerializeField]
     private LayerMask WhatIsGround;
     [SerializeField]
-    private LayerMask WhatIsPlatform;
+    private LayerMask WhatIsRoof;
 
     [SerializeField]
     private Transform GroundCheckPoint;
@@ -18,6 +18,7 @@ public class CollisionDetected : MonoBehaviour
 
     private float checkRadius = 0.15f;
     private bool _wasGrounded;
+    private bool _wasTouchingRoof;
 
     [SerializeField]
     private static bool _isGrounded;
@@ -30,8 +31,8 @@ public class CollisionDetected : MonoBehaviour
     public Transform CurrentPlatform;
 
     [SerializeField]
-    private bool _isTouchingRoof;
-    public bool IsTouchingRoof { get { return _isTouchingRoof; } }
+    private static bool _isTouchingRoof;
+    public static bool IsTouchingRoof { get { return _isTouchingRoof; } }
 
     [SerializeField]
     private float _distanceToGround;
@@ -50,15 +51,19 @@ public class CollisionDetected : MonoBehaviour
     private void CheckCollisions()
     {
         CheckGrounded();
-        CheckPlatformed();
+        //CheckPlatformed();
         CheckRoof();
     }
 
     private void CheckRoof()
     {
         var colliders = Physics2D.OverlapCircleAll(RoofCheckPoint.position,
-          checkRadius, WhatIsGround);
+          checkRadius, WhatIsRoof);
         _isTouchingRoof = colliders.Length > 0;
+
+        if (!_wasTouchingRoof && _isTouchingRoof)
+            //SendMessage("OnLanding");
+        _wasTouchingRoof = _isTouchingRoof;
     }
 
     private void CheckGrounded()
@@ -72,18 +77,18 @@ public class CollisionDetected : MonoBehaviour
         _wasGrounded = _isGrounded;
     }
 
-    private void CheckPlatformed()
-    {
-        var colliders = Physics2D.OverlapCircleAll(GroundCheckPoint.position,
-           checkRadius, WhatIsPlatform);
-        _isPlatformGround = colliders.Length > 0;
-        if (_isPlatformGround)
-            CurrentPlatform = colliders[0].transform;
+    //private void CheckPlatformed()
+    //{
+    //    var colliders = Physics2D.OverlapCircleAll(GroundCheckPoint.position,
+    //       checkRadius, WhatIsPlatform);
+    //    _isPlatformGround = colliders.Length > 0;
+    //    if (_isPlatformGround)
+    //        CurrentPlatform = colliders[0].transform;
 
-        if (!_wasGrounded && _isGrounded)
-            //SendMessage("OnLanding");
-        _wasGrounded = _isGrounded;
-    }
+    //    if (!_wasGrounded && _isGrounded)
+    //        //SendMessage("OnLanding");
+    //    _wasGrounded = _isGrounded;
+    //}
 
     private void CheckDistanceToGround()
     {

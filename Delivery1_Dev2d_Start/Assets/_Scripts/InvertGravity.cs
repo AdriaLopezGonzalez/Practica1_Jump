@@ -27,10 +27,6 @@ public class InvertGravity : MonoBehaviour
         {
             isCollidingPlayer = true;
         }
-        else
-        {
-            isCollidingPlayer = false;
-        }
     }
 
     private void CheckCollision(Rigidbody2D playerBody2D)

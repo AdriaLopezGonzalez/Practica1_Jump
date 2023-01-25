@@ -379,14 +379,14 @@ MonoBehaviour:
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  WhatIsPlatform:
+  WhatIsRoof:
     serializedVersion: 2
     m_Bits: 512
   GroundCheckPoint: {fileID: 1918508236}
   RoofCheckPoint: {fileID: 254180828}
   CurrentPlatform: {fileID: 464452679}
   _isTouchingRoof: 0
-  _distanceToGround: 1
+  _distanceToGround: 0
   _groundAngle: 0
 --- !u!114 &155923687
 MonoBehaviour:
