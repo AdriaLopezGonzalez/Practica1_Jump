@@ -411,8 +411,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a569c87fe77e15441b9700404545a3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpHeight: 1
-  DistanceToMaxHeight: 2
+  JumpHeight: 1.5
+  DistanceToMaxHeight: 3
   SpeedHorizontal: 1.5
   PressTimeToMaxJump: 0.3
   filter:
