@@ -30,13 +30,13 @@ public class PlayerJump : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerInput.OnJumpStarted += OnJumpStarted;
+        //PlayerInput.OnJumpStarted += OnJumpStarted;
         PlayerInput.OnJumpFinished += OnJumpFinished;
     }
 
     private void OnDisable()
     {
-        PlayerInput.OnJumpStarted -= OnJumpStarted;
+        //PlayerInput.OnJumpStarted -= OnJumpStarted;
         PlayerInput.OnJumpFinished -= OnJumpFinished;
     }
     void Start()
@@ -99,7 +99,7 @@ public class PlayerJump : MonoBehaviour
         _rigidbody.gravityScale = grav / 9.81f;
     }
 
-    public void OnJumpStarted(PlayerInput v)
+    public void OnJumpStarted()
     {
         SetGravity();
         var vel = new Vector2(_rigidbody.velocity.x, GetJumpForce());

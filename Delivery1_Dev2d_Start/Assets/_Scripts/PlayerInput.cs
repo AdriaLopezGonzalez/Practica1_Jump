@@ -19,7 +19,10 @@ public class PlayerInput : MonoBehaviour
         MovementVertical = Input.GetAxis("Vertical");
         if (Input.GetKeyDown(KeyCode.Space) && (CollisionDetected.IsGrounded || CollisionDetected.IsTouchingRoof))
         {
-           OnJumpStarted?.Invoke(this);
+           //OnJumpStarted?.Invoke(this);
+
+           var _playerJump = gameObject.GetComponent<PlayerJump>();
+           _playerJump.OnJumpStarted();
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
