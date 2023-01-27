@@ -26,21 +26,24 @@ public class PlayerJump : MonoBehaviour
 
     public static Action<Rigidbody2D> CheckCollision;
 
+    CollisionDetected collisionDetected;
+
     private bool startJump;
 
     private void OnEnable()
     {
-        //PlayerInput.OnJumpStarted += OnJumpStarted;
+        PlayerInput.OnJumpStarted += OnJumpStarted;
         PlayerInput.OnJumpFinished += OnJumpFinished;
     }
 
     private void OnDisable()
     {
-        //PlayerInput.OnJumpStarted -= OnJumpStarted;
+        PlayerInput.OnJumpStarted -= OnJumpStarted;
         PlayerInput.OnJumpFinished -= OnJumpFinished;
     }
     void Start()
     {
+        collisionDetected = gameObject.GetComponent<CollisionDetected>();
         _rigidbody = GetComponent<Rigidbody2D>();
         collisionDetection = GetComponent<CollisionDetected>();
     }
@@ -64,7 +67,7 @@ public class PlayerJump : MonoBehaviour
 
     private bool PeakReached()
     {
-        if (CollisionDetected.WasTouchingRoof)
+        if (collisionDetected.WasTouchingRoof)
         {
             bool reached = ((_lastVelocity_Y * -_rigidbody.velocity.y) > 0);
             _lastVelocity_Y = -_rigidbody.velocity.y;
@@ -94,12 +97,12 @@ public class PlayerJump : MonoBehaviour
     {
         var grav = 2 * JumpHeight * (SpeedHorizontal * SpeedHorizontal)
             / (DistanceToMaxHeight * DistanceToMaxHeight);
-        if (CollisionDetected.IsTouchingRoof)
+        if (collisionDetected.IsTouchingRoof)
             grav = -grav;
         _rigidbody.gravityScale = grav / 9.81f;
     }
 
-    public void OnJumpStarted()
+    public void OnJumpStarted(PlayerInput v)
     {
         SetGravity();
         var vel = new Vector2(_rigidbody.velocity.x, GetJumpForce());

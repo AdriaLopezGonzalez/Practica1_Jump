@@ -19,22 +19,22 @@ public class CollisionDetected : MonoBehaviour
     private float checkRadius = 0.15f;
     private bool _wasGrounded;
 
-    private static bool _wasTouchingRoof;
-    public static bool WasTouchingRoof { get { return _wasTouchingRoof; } }
+    private bool _wasTouchingRoof;
+    public bool WasTouchingRoof { get { return _wasTouchingRoof; } }
 
     [SerializeField]
-    private static bool _isGrounded;
-    public static bool IsGrounded { get { return _isGrounded || _isPlatformGround; } }
+    private bool _isGrounded;
+    public bool IsGrounded { get { return _isGrounded || _isPlatformGround; } }
 
     [SerializeField]
-    private static bool _isPlatformGround;
+    private bool _isPlatformGround;
     public bool IsPlatForm { get { return _isPlatformGround; } }
 
     public Transform CurrentPlatform;
 
     [SerializeField]
-    private static bool _isTouchingRoof;
-    public static bool IsTouchingRoof { get { return _isTouchingRoof; } }
+    private bool _isTouchingRoof;
+    public bool IsTouchingRoof { get { return _isTouchingRoof; } }
 
     [SerializeField]
     private float _distanceToGround;
@@ -53,7 +53,6 @@ public class CollisionDetected : MonoBehaviour
     private void CheckCollisions()
     {
         CheckGrounded();
-        //CheckPlatformed();
         CheckRoof();
     }
 
@@ -78,19 +77,6 @@ public class CollisionDetected : MonoBehaviour
             //SendMessage("OnLanding");
         _wasGrounded = _isGrounded;
     }
-
-    //private void CheckPlatformed()
-    //{
-    //    var colliders = Physics2D.OverlapCircleAll(GroundCheckPoint.position,
-    //       checkRadius, WhatIsPlatform);
-    //    _isPlatformGround = colliders.Length > 0;
-    //    if (_isPlatformGround)
-    //        CurrentPlatform = colliders[0].transform;
-
-    //    if (!_wasGrounded && _isGrounded)
-    //        //SendMessage("OnLanding");
-    //    _wasGrounded = _isGrounded;
-    //}
 
     private void CheckDistanceToGround()
     {
