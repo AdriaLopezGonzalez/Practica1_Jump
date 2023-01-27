@@ -44,6 +44,13 @@ public class CollisionDetected : MonoBehaviour
     private float _groundAngle;
     public float GroundAngle { get { return _groundAngle; } }
 
+    PlayerJump playerJump;
+
+    private void Start()
+    {
+        playerJump = gameObject.GetComponent<PlayerJump>();
+    }
+
     void FixedUpdate()
     {
         CheckCollisions();
@@ -62,8 +69,8 @@ public class CollisionDetected : MonoBehaviour
           checkRadius, WhatIsRoof);
         _isTouchingRoof = colliders.Length > 0;
 
-        if (!_wasTouchingRoof && _isTouchingRoof)
-            //SendMessage("OnLanding");
+        if (_wasTouchingRoof && !_isTouchingRoof)
+            playerJump.canChangeGravity = true;
         _wasTouchingRoof = _isTouchingRoof;
     }
 
@@ -73,8 +80,8 @@ public class CollisionDetected : MonoBehaviour
            checkRadius, WhatIsGround);
         _isGrounded = colliders.Length > 0;
 
-        if (!_wasGrounded && _isGrounded)
-            //SendMessage("OnLanding");
+        if (_wasGrounded && !_isGrounded)
+            playerJump.canChangeGravity = true;
         _wasGrounded = _isGrounded;
     }
 

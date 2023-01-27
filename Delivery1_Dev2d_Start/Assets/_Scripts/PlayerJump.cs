@@ -12,7 +12,7 @@ public class PlayerJump : MonoBehaviour
     // public float TimeToMaxHeight;
 
     public float DistanceToMaxHeight;
-    public float SpeedHorizontal; //=> movemenetController.MaxSpeed
+    public float SpeedVertical; //=> movemenetController.MaxSpeed
 
     private CollisionDetected collisionDetection;
 
@@ -28,7 +28,7 @@ public class PlayerJump : MonoBehaviour
 
     CollisionDetected collisionDetected;
 
-    private bool startJump;
+    public bool canChangeGravity;
 
     private void OnEnable()
     {
@@ -50,13 +50,12 @@ public class PlayerJump : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (PeakReached()&&startJump)
+        if (PeakReached() && canChangeGravity)
         {
             Debug.Log("pik");
 
             CheckCollision?.Invoke(_rigidbody);
-
-            startJump = false;
+            canChangeGravity = false;
         }
     }
 
@@ -67,18 +66,9 @@ public class PlayerJump : MonoBehaviour
 
     private bool PeakReached()
     {
-        if (collisionDetected.WasTouchingRoof)
-        {
-            bool reached = ((_lastVelocity_Y * -_rigidbody.velocity.y) > 0);
-            _lastVelocity_Y = -_rigidbody.velocity.y;
-            return reached;
-        }
-        else
-        {
-            bool reached = ((_lastVelocity_Y * _rigidbody.velocity.y) > 0);
-            _lastVelocity_Y = _rigidbody.velocity.y;
-            return reached;
-        }
+        bool reached = ((_lastVelocity_Y * _rigidbody.velocity.y) < 0);
+        _lastVelocity_Y = _rigidbody.velocity.y;
+        return reached;
     }
 
     public void OnJump(PlayerInput v)
@@ -90,12 +80,12 @@ public class PlayerJump : MonoBehaviour
 
     private float GetJumpForce()
     {
-        return 2 * JumpHeight * SpeedHorizontal / DistanceToMaxHeight;
+        return 2 * JumpHeight * SpeedVertical / DistanceToMaxHeight;
     }
 
     private void SetGravity()
     {
-        var grav = 2 * JumpHeight * (SpeedHorizontal * SpeedHorizontal)
+        var grav = 2 * JumpHeight * (SpeedVertical * SpeedVertical)
             / (DistanceToMaxHeight * DistanceToMaxHeight);
         if (collisionDetected.IsTouchingRoof)
             grav = -grav;
@@ -115,7 +105,7 @@ public class PlayerJump : MonoBehaviour
             Mathf.Clamp01((Time.time - _jumpStartedTime) /
             PressTimeToMaxJump);
         _rigidbody.gravityScale *= fractionOfTimePressed;
-        startJump = true;
+        
     }
 
     private float DistanceToGround()
