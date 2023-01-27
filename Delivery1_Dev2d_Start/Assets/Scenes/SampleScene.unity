@@ -384,7 +384,10 @@ MonoBehaviour:
     m_Bits: 512
   GroundCheckPoint: {fileID: 1918508236}
   RoofCheckPoint: {fileID: 254180828}
+  _isGrounded: 0
+  _isPlatformGround: 0
   CurrentPlatform: {fileID: 464452679}
+  _isTouchingRoof: 0
   _distanceToGround: 0
   _groundAngle: 0
 --- !u!114 &155923687
@@ -413,7 +416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpHeight: 1.5
   DistanceToMaxHeight: 3
-  SpeedHorizontal: 1.5
+  SpeedVertical: 1.5
   PressTimeToMaxJump: 0.3
   filter:
     useTriggers: 0
@@ -429,6 +432,7 @@ MonoBehaviour:
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  canChangeGravity: 0
 --- !u!114 &155923689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2607,4 +2611,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e2f4dc9695937d47a3fee874c3246be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 155923681}
