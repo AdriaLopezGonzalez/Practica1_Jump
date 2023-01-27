@@ -379,14 +379,13 @@ MonoBehaviour:
   WhatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  WhatIsPlatform:
+  WhatIsRoof:
     serializedVersion: 2
     m_Bits: 512
   GroundCheckPoint: {fileID: 1918508236}
   RoofCheckPoint: {fileID: 254180828}
   CurrentPlatform: {fileID: 464452679}
-  _isTouchingRoof: 0
-  _distanceToGround: 1
+  _distanceToGround: 0
   _groundAngle: 0
 --- !u!114 &155923687
 MonoBehaviour:
@@ -412,8 +411,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a569c87fe77e15441b9700404545a3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpHeight: 1
-  DistanceToMaxHeight: 2
+  JumpHeight: 1.5
+  DistanceToMaxHeight: 3
   SpeedHorizontal: 1.5
   PressTimeToMaxJump: 0.3
   filter:
@@ -2226,7 +2225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214eb3ba0d98b5141bac2a2d46e4abe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PowerUpObject: {fileID: 1821473468}
 --- !u!1 &1918508235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2609,3 +2607,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e2f4dc9695937d47a3fee874c3246be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 155923681}
